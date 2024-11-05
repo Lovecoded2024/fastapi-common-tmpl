@@ -5,8 +5,7 @@ services:
     command: postgres -c 'max_connections=1024'
     container_name: example-postgres
     restart: always
-    volumes:
-      - example-data-postgres:/var/lib/postgresql/data
+
     env_file:
       - .env
     networks:
@@ -22,8 +21,7 @@ services:
     image: redis:7.0.15
     container_name: example-redis
     restart: always
-    volumes:
-      - example-data-redis:/data
+
     networks:
       - example_net
     ports:
@@ -83,18 +81,3 @@ networks:
   example_net:
     name: example_net
     external: false
-volumes:
-  example-data-postgres:
-    name: example-data-postgres
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /data/example/postgres
-  example-data-redis:
-    name: example-data-redis
-    driver: local
-    driver_opts:
-      o: bind
-      type: none
-      device: /data/example/redis

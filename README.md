@@ -171,7 +171,7 @@ aerich heads
 cd ./fastapi-common-tmpl
 
 # 构建镜像 1.0
-docker build -t fastapi-common-tmpl:1.0 .
+docker build -t fastapi-common-tmpl:latest .
 
 # 检查镜像
 docker images | grep fastapi-common-tmpl
