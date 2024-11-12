@@ -7,8 +7,9 @@ from app.main import app
 @pytest.mark.anyio
 async def test_user_crud(client: AsyncClient) -> None:
     # 创建 Group
+    eg_group = f"eg_group_{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}"
     response = await client.post(app.url_path_for('example_create_group'),
-                                 json={"name": "eg_group", "description": "This is description."})
+                                 json={"name": eg_group, "description": "This is description."})
     assert response.status_code == 200, response.text
     group_id = response.json()["id"]
 
@@ -58,27 +59,28 @@ async def test_user_crud(client: AsyncClient) -> None:
 @pytest.mark.anyio
 async def test_group_crud(client: AsyncClient) -> None:
     # 创建 Group
+    eg_group = f"eg_group_{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}"
     data = {
-        "name": "eg_group",
+        "name": eg_group,
         "description": "This is description."
     }
     response = await client.post(app.url_path_for('example_create_group'), json=data)
     assert response.status_code == 200, response.text
     group = response.json()
-    assert group["name"] == "eg_group"
+    assert group["name"] == eg_group
     group_id = group["id"]
 
     # 查询 Group
     response = await client.get(app.url_path_for('example_get_group', group_id=group_id))
     assert response.status_code == 200, response.text
     group = response.json()
-    assert group["name"] == "eg_group"
+    assert group["name"] == eg_group
 
     # 查询 Groups
     response = await client.get(app.url_path_for('example_get_groups'))
     assert response.status_code == 200, response.text
     groups = response.json()
-    assert len([group for group in groups if group.get("name") == "eg_group"]) == 1
+    assert len([group for group in groups if group.get("name") == eg_group]) == 1
 
     # 更新 Group
     data = {"name": "eg_update_group"}
