@@ -7,6 +7,7 @@ from app.main import app
 @pytest.mark.anyio
 async def test_user_crud(client: AsyncClient) -> None:
     # 创建 Group
+
     eg_group = f"eg_group_{datetime.datetime.now().strftime('%Y%m%d%H%M%S%f')}"
     response = await client.post(app.url_path_for('example_create_group'),
                                  json={"name": eg_group, "description": "This is description."})
